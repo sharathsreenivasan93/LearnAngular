@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<body>
+
+		<div ng-app="myApp" ng-init="firstName='Byom';quantity=2;cost=5;names=[
+																	{name:'Byom',country:'USA'},
+																	{name:'Nipple',country:'India'},
+																	{name:'Carnitos', country:'Colombia'}]">
+			<p> Name: <input type="text" ng-model="firstName"></p>
+			<p>You wrote: {{firstName}}</p>
+
+			<p>Quantity: <input type="number" ng-model="quantity"></p>
+			<p>Cost: <input type="number" ng-model="cost"></p>
+
+			<p>Total Cost: - {{quantity*cost}}</p>
+
+			<ul>
+				<li ng-repeat = "x in names">
+					{{x.name + " is from " + x.country}}
+				</li>
+			</ul>
+
+			<test-directive-2></test-directive-2>
+			<div class="test-directive"></div>
+
+
+		</div>
+
+	</body>
+	<script>
+		var app = angular.module("myApp", []);
+		
+		app.directive("testDirective", function() {
+    		return {
+    			restrict : "C",
+        		template : "<h1>Made by a directive!</h1>"
+    		};
+		});
+
+		app.directive("testDirective2", function() {
+    		return {
+    			
+        		template : "<h1>Made by a directive!</h1>"
+    		};
+		});
+
+	</script>
+
+</html>
