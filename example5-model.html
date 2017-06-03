@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<style>
+		input.ng-invalid {
+    		background-color: lightblue;
+		}
+		input.ng-empty {
+			background-color: red;
+		}
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<body>
+
+		<div ng-app="myApp" ng-controller="myCtrl">
+			Name - <input ng-model="name">
+
+			<p>You entered {{name}}</p>
+
+			<form name="myForm" ng-init="myText='post@myweb.com'">
+				Email - <input type="email" name="myAddress" ng-model="text">
+				<span ng-show="myForm.myAddress.$error.email">Not a valid e-mail address </span>
+
+				<h1>Status</h1>
+				{{myForm.myAddress.$valid}}
+				{{myForm.myAddress.$dirty}}
+				{{myForm.myAddress.$touched}}
+
+				Enter your name: <input name="myName" ng-model="myText" required>
+
+			</form>
+		</div>
+
+	</body>
+
+	<script>
+		var app = angular.module('myApp',[]);
+		
+		app.controller('myCtrl', function($scope) {
+			$scope.name = "Byom Bakshi";
+		});
+	
+	</script>
+
+</html>
