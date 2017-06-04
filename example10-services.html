@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<body>
+
+		<div ng-app="myApp" ng-controller="myCtrl">
+
+			<p>The URL of the page is {{myUrl}}</p>
+
+			<p>Today's welcome message is:</p>
+			<h1>{{myWelcome}}</h1>
+
+			<p>The header is - </p>
+			<h1>{{myHeader}}</h1>
+
+			<p> The time is - {{myTime}} </p>
+
+			<p>The hexadecimal value of 255 is - {{hex}}</p>
+
+			<p>The hexadecimal value using filter is - {{245 | myFormat}}</p>
+		</div>
+
+	</body>
+	<script>
+		var app = angular.module('myApp',[]);
+
+		app.service('hexafy', function() {
+			this.myFunc = function(x) {
+				return x.toString(16);
+			}
+		});
+
+		app.filter('myFormat', ['hexafy', function(hexafy){
+			return function(x) {
+				return hexafy.myFunc(x);
+			}
+		}]);
+
+		app.controller('myCtrl',function($scope,$location, $http, $timeout, $interval, hexafy){
+			$scope.myUrl=$location.absUrl();
+
+			$scope.myHeader = "Hello World!";
+
+			/*$http.get("welcome.htm").then(function (response){
+				console.log(response);
+				$scope.myWelcome = response.data;
+			});*/
+
+			$timeout(function () {
+				$scope.myHeader = "How are you today?";
+			}, 2000);
+
+			$interval(function() {
+				$scope.myTime = new Date().toLocaleTimeString();
+			},1000);
+
+			$scope.hex = hexafy.myFunc(255);
+		});
+
+	</script>
+
+</html>
