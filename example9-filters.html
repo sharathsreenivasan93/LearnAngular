@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<body>
+
+		<div ng-app="myApp" ng-controller="myCtrl">
+
+			<p>The name is {{lastName | uppercase}}</p>
+
+			<p>The name filtered lowercase is {{lastName2 | lowercase}}</p>
+
+			<ul>
+
+				<li ng-repeat="x in nameandcountry | filter: {name:'byom'} | orderBy:'country'">
+
+					{{x.name +", "+x.country}}
+
+				</li>
+
+			</ul>
+
+			<p>Price: {{price | currency}}</p>
+
+			<ul>
+			 <li ng-repeat="x in names | filter:'an'">
+			 		{{x}}
+			 </li>
+			</ul>
+
+			<p><input type="text" ng-model="test"></p>
+
+			<ul>
+				<li ng-repeat="x in names | filter:test">
+					{{x}}
+				</li>
+			</ul>
+
+			<table border="1" width="100%">
+				<thead>
+					<tr>
+						<th ng-click="orderByMe('name')">Name</th>
+						<th ng-click="orderByMe('country')">Country</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr ng-repeat="x in nameandcountry | orderBy:myOrderBy">
+						<td>{{x.name}}</td>
+						<td>{{x.country}}</td>
+					</tr>
+				</tbody>
+
+			</table>
+
+			<ul>
+				<li ng-repeat="x in names">
+					{{x | myFormat}}
+				</li>
+
+			</ul>
+
+		</div>
+
+	</body>
+
+	<script>
+		var app = angular.module('myApp',[]);
+
+		app.controller("myCtrl",function($scope){
+			$scope.lastName = "byom";
+			$scope.lastName2 = "BYOM";
+
+			$scope.nameandcountry = [{name:'byom',country:'USA'},
+							{name:'nipple',country:'India'},
+							{name:'sharath',country:'South Africa'},
+							{name:'byom',country:'India'}];
+
+			$scope.price = 65;
+
+			$scope.names = ['Byomkesh','Sharath','Karan','Sudhanva','Shyam','Sanjana'];
+
+			$scope.orderByMe = function (x) {
+				$scope.myOrderBy = x;
+
+			}
+
+		});
+
+		app.filter('myFormat',function(){
+
+			return function(x) {
+				var i,c, txt = "";
+				for (i = 0; i < x.length; i++) {
+					c = x[i];
+					if (i%2 == 0) {
+						c = c.toUpperCase();
+					}
+					txt = txt + c;
+				}
+				return txt;
+			};
+		});
+	</script>
+</html>
